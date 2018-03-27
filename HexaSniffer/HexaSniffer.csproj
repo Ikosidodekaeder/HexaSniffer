@@ -62,6 +62,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GUI\AvailablePackets.cs" />
+    <Compile Include="Hexa\PacketData.cs" />
+    <Compile Include="Hexa\PacketTypes.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

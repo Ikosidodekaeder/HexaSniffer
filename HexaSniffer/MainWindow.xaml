@@ -1,12 +1,115 @@
-﻿<Window x:Class="HexaSniffer.MainWindow"
+﻿<Window x:Name="Screen" x:Class="HexaSniffer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HexaSniffer"
+        xmlns:src="clr-namespace:HexaSniffer.GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title=""
+        Height="350" 
+        Width="525"
+>
+    
+
+    <DockPanel  LastChildFill="True">
+        <Menu  DockPanel.Dock="Top">
+            <MenuItem Header="File">
+            </MenuItem>
+        </Menu>
+
+        <WrapPanel DockPanel.Dock="Top" Margin="0 5 0 5">
+            <Label Content="IP:" />
+            <TextBox x:Name="IPAddress" Width="130" Text="svdragster.dtdns.net" Height="20" Padding="0" />
+            <Label Content="Port"/>
+            <TextBox x:Name="Port" Width="100" Text="25565" Height="20" />
+            <Button x:Name="connect" Content="connect" Margin="5" Padding="2"  Click="connect_Click"/>
+            <Button x:Name="disconnect" Content="disconnect" Margin="5" Padding="2" Click="disconnect_Click"/>
+            <Button x:Name="serverliste" Content="server liste" Margin="5" Padding="2" Click="serverliste_Click"/>
+        </WrapPanel>
+
+        <TabControl HorizontalContentAlignment="Left" VerticalContentAlignment="Top"  >
+            <!-- RawLog contains the raw stream of characteres received from the socket connection -->
+            <TabItem Header="RawLog">
+                <TextBox x:Name="RawLog">
+
+                </TextBox>
+            </TabItem>
+            <!-- Log contains the the processed RawLog-->
+            <TabItem Header="Log">
+                <DockPanel>
+                    <Grid>
+                        <DataGrid Name="DG1" ItemsSource="{Binding}" AutoGenerateColumns="true" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="TimeStamp"  Binding="{Binding time}"/>
+                                <DataGridTextColumn Header="PacketType" Binding="{Binding PacketType}" />
+                                <DataGridTextColumn Header="Payload" Binding="{Binding PayLoad}"  />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="SendPackets">
+                <!--<TabItem.Resources>
+                    <src:AvailablePackets x:Key="availablePackets"/>
+                </TabItem.Resources>
+                -->
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition 
+                            Height="auto" 
+                        />
+                        <RowDefinition 
+                            Height="auto" 
+                        />
+                        <RowDefinition 
+                            Height="auto" 
+                        />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition 
+                            Width="auto"
+                        />
+                        <ColumnDefinition 
+                            Width="auto"
+                        />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Row="0" Grid.Column="1" 
+                            Name="Send_Packet"
+                            Content="Send Packet"
+                            Height="auto"
+                            Margin="5"
+                            Padding="5"
+                            Click="Send_Packet_Click"
+                    />
+                    <ComboBox 
+                        Grid.Row="0" Grid.Column="0"
+                        Margin="5"
+                        Name="SelectPacket"
+                        Width="100"
+                        IsEditable="false"
+                        IsReadOnly="true" Height="27" VerticalAlignment="Bottom"
+                        SelectedValuePath="AvailablePackets"
+                        SelectionChanged="SelectPacket_SelectionChanged"
+                    >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="1">
+                                    <TextBlock Text="{Binding }"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    
+                </Grid>
+            </TabItem>
+
+        </TabControl>
         
-    </Grid>
+    </DockPanel>
 </Window>
